@@ -74,7 +74,7 @@ function naechsteFrage() {
         "V-Wert";
       document.getElementById("antwortText4").textContent =
         "G-Wert";
-      document.getElementById("bild1").setAttribute("src", "grafik/r-wert.jpg");
+      document.getElementById("bild1").setAttribute("src", "grafik/graphic.png");
     });
   } else if (runde == 3) {
     nav.resetToPage("frage").then(function () {
