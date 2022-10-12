@@ -5,7 +5,7 @@
 	<meta charset="utf-8">
 	<link rel="apple-touch-icon" href="grafik/coronavirus.png" />
 	<link rel="shortcut icon" href="grafik/coronavirus.png" sizes="196x196">
-	
+
 	<meta name="mobile-web-app-capable" content="yes">
 	<meta name="apple-mobile-web-app-capable" content="yes">
 	<link rel="stylesheet" href="onsen2.11.2/css/onsenui.min.css">
@@ -28,24 +28,19 @@
 					<h2 class="card__title">Corona-Pandemie Quiz</h2>
 					<div class="card__content"> Fragen zur Themen aus der Corona-Pandemie</div>
 				</div>
-		
 				<div style="text-align:center">
 					<img src="grafik/coronavirus.jpg" width="95%" />
 				</div>
-
 				<!-- <img src="grafik/coronavirus.jpg" width="100%"/> -->
-
 				<div class="card">
-					<div class="card__content">Hinweis: Fragen können eine Auswahl-, Multiple-Choice-, Kurz- oder Wahr/Falsch-Antwort verlagen</div>
+					<div class="card__content">Hinweis: Fragen können eine Auswahl-, Multiple-Choice-, Kurz- oder
+						Wahr/Falsch-Antwort verlagen</div>
 				</div>
-
 				<div style="text-align:center">
 					<button class="button" style="width: 95%; margin: 0 auto;" onclick="naechsteFrage()">
 						Quiz starten
 					</button>
 				</div>
-
-
 			</div>
 
 			<div class="tabbar">
@@ -56,7 +51,6 @@
 						<div class="tabbar__label">Home</div>
 					</button>
 				</label>
-
 				<label class="tabbar__item">
 					<input type="radio" name="tabbar-a" onclick="nav.resetToPage('einstellungen')">
 					<button class="tabbar__button">
@@ -169,6 +163,13 @@
 						???
 					</button>
 				</div>
+
+				<br /><br />
+				<div style="text-align:center;margin-bottom:10px; ">
+					<button class="button" style="width: 95%" onclick="pruefeAntwort(0)">
+						weiter
+					</button>
+				</div>
 				<div style="text-align:center;margin-bottom:10px; ">
 					<button class="button button--outline" style="width: 95%" onclick="nav.pushPage('home')">
 						abbrechen, zur Startseite
@@ -274,7 +275,7 @@
 				</div>
 				<div style="text-align:center;margin-bottom:10px; ">
 					<input type="text" class="text-input text-input--underbar" placeholder="Antwort" value=""
-					id="AusfuellenAntwort">
+						id="AusfuellenAntwort">
 				</div>
 				<div style="text-align:center;margin-bottom:10px; ">
 					<button class="button" style="width: 95%" onclick="pruefeAntwort(0)">
@@ -307,6 +308,53 @@
 			</div>
 		</ons-page>
 	</template>
+
+
+	<!-- <template id="auswertungFinal">
+		<ons-page>
+			<div class="toolbar">
+				<div class="toolbar__center">Auswertung</div>
+			</div>
+			<div class="card">
+				<div class="card__content" id="text_aufloesung">???</div>
+			</div>
+			<div style="text-align:center;margin-bottom:10px; ">
+				<button class="button button--outline" style="width: 95%" onclick="nav.pushPage('end')">
+					zum Ende
+				</button>
+			</div>
+		</ons-page>
+	</template> -->
+
+
+
+	<template id="end">
+		<ons-page>
+			<div class="toolbar">
+				<div class="toolbar__center">Corona-Pandemie Quiz</div>
+			</div>
+			<div>
+				<div class="card">
+					<h2 class="card__title">Ergebnis Deiner Corona-Pandemie Quiz</h2>
+					<div class="card__content">
+						Vielen Dank fürs Spielen!
+						<br /><br />
+						Anzahl der richtigen Antworten: <div id="richtigeAntworten">Nr.RA</div>
+						Anzahl der falschen Antworten: <div id="falscheAntworten">Nr.FA</div> 
+					</div>
+				</div>
+				<div style="text-align:center;margin-bottom:10px; ">
+					<button class="button button--outline" style="width: 95%" onclick="nav.pushPage('home')">
+						abbrechen, zur Startseite
+					</button>
+				</div>
+			</div>
+		</ons-page>
+	</template>
+
+
+
+
 
 
 </body>

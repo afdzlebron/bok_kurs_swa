@@ -146,14 +146,21 @@ function naechsteFrage() {
 
 
   else {
-    //TODO irgendwo schöner ausgeben, alert nur als Test
-    alert(
-      "Finito, Du hast " +
-        richtigeAntworten + " richtige und " + falscheAntworten +
-        " falsche Antworten" +
-        "\n " + spielername + " Vielen Dank fürs Spielen"
-    );
-    nav.pushPage("home"); //Spiel zu Ende ggf. auch eine extra Seite dafür einrichten
+ 
+
+    nav.resetToPage("end").then(function(){
+      document.getElementById("richtigeAntworten").innerHTML = richtigeAntworten;
+      document.getElementById("falscheAntworten").innerHTML= falscheAntworten;
+
+    });
+
+    // alert(
+    //   "Finito, Du hast " +
+    //     richtigeAntworten + " richtige und " + falscheAntworten +
+    //     " falsche Antworten" +
+    //     "\n " + spielername + " Vielen Dank fürs Spielen"
+    // );
+    nav.pushPage("home"); 
   }
 }
 
@@ -241,7 +248,7 @@ function pruefeAntwort(antwortNr) {
     //richtig
     falscheAntworten = falscheAntworten - (falscheAntworten % 2);
     runde++;
-    nav.resetToPage("auswertung").then(function () {
+    nav.pushPage("auswertung").then(function () {
       document.getElementById("text_aufloesung").textContent =
         "Richtige Antwort!";
     });
