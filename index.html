@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<link rel="stylesheet" href="onsen2.11.2/css/onsenui.min.css">
+	<link rel="stylesheet" href="onsen2.11.2/css/onsen-css-components.min.css">
+	<script src="onsen2.11.2/js/onsenui.min.js"></script>
+	<title>Corona-Pandemie Quiz</title>
+</head>
+
+<body>
+	<ons-navigator animation="slide" page="home" id="navigator"></ons-navigator>
+
+	<template id="home">
+		<ons-page>
+
+			<div class="toolbar">
+				<div class="toolbar__center">Corona-Pandemie Quiz</div>
+			</div>
+
+			<div>
+
+				<div class="card">
+					<h2 class="card__title">Corona-Pandemie Quiz</h2>
+					<div class="card__content"> Fragen zur Themen aus der Corona-Pandemie</div>
+				</div>
+				
+				<div style="text-align:center">
+					<img src="grafik/coronavirus.jpg" width="95%" />
+				</div>
+
+				<!-- <img src="grafik/coronavirus.jpg" width="100%"/> -->
+
+				<div class="card">
+					<div class="card__content">Hinweis: Fagen können eine Auswahl-, Multiple-Choice-, Kurz- oder Wahr/Falsch-Antwort verlagen</div>
+				</div>
+
+				<div style="text-align:center">
+					<button class="button" style="width: 95%; margin: 0 auto;" onclick="naechsteFrage()">
+						Quiz starten
+					</button>
+				</div>
+
+
+			</div>
+
+			<div class="tabbar">
+				<label class="tabbar__item">
+					<input type="radio" name="tabbar-a" checked="checked">
+					<button class="tabbar__button">
+						<i class="tabbar__icon ion-ios-home"></i>
+						<div class="tabbar__label">Home</div>
+					</button>
+				</label>
+
+				<label class="tabbar__item">
+					<input type="radio" name="tabbar-a" onclick="nav.resetToPage('einstellungen')">
+					<button class="tabbar__button">
+						<i class="tabbar__icon ion-ios-settings"></i>
+						<div class="tabbar__label">Einstellungen</div>
+					</button>
+				</label>
+
+				<label class="tabbar__item">
+					<input type="radio" name="tabbar-a">
+					<button class="tabbar__button">
+						<i class="tabbar__icon ion-ios-help-circle"></i>
+						<div class="tabbar__label">Hilfe</div>
+					</button>
+				</label>
+			</div>
+
+		</ons-page>
+	</template>
+
+	<template id="einstellungen">
+		<ons-page>
+			<div class="toolbar">
+				<div class="toolbar__center">Corona-Pandemie Quiz</div>
+			</div>
+			<div>
+				<div class="card">
+					<h2 class="card__title">Einstellungen</h2>
+				</div>
+				<div class="card">
+					<div><input type="text" class="text-input text-input--underbar" placeholder="Dein Name" value=""
+							id="spielername"></div>
+					<div><input type="text" class="text-input text-input--underbar" placeholder="Dein Name" value=""
+							disabled></div>
+				</div>
+				<div class="card">
+					<label class="radio-button radio-button--material">
+						<input type="radio" class="radio-button__input radio-button--material__input" name="r"
+							id="checkbox_f">
+						<div class="radio-button__checkmark radio-button--material__checkmark"></div>
+						Frau
+					</label>
+					<label class="radio-button radio-button--material">
+						<input type="radio" class="radio-button__input radio-button--material__input" name="r"
+							id="checkbox_m">
+						<div class="radio-button__checkmark radio-button--material__checkmark"></div>
+						Herr
+					</label>
+					<label class="radio-button radio-button--material">
+						<input type="radio" class="radio-button__input radio-button--material__input" name="r"
+							checked="checked" id="checkbox_d">
+						<div class="radio-button__checkmark radio-button--material__checkmark"></div>
+						Divers
+					</label>
+				</div>
+				<div class="card">Land:<br />
+					<select class="select-input select-input--material" id="land">
+						<option value="de">Deutschland</option>
+						<option value="at">Österreich</option>
+						<option value="ch">Schweiz</option>
+					</select>
+				</div>
+				<div class="card">
+					<div><input type="text" class="text-input text-input--underbar" placeholder="50" id="alter"></div>
+					<div><input type="text" class="text-input text-input--underbar" placeholder="Dein Alter" value=""
+							disabled></div>
+					<div class="range" style="width:100%">
+						<input id="slider1" type="range" class="range__input" oninput="aendereAlter();">
+						<input type="range" class="range__focus-ring">
+					</div>
+				</div>
+				<div class="card">
+					<button onclick="speichereEinstellungen()" class="button button--outline" style="width: 95%">
+						Einstellungen speichern
+					</button>
+				</div>
+			</div>
+		</ons-page>
+	</template>
+
+	<template id="frage">
+		<ons-page>
+			<div class="toolbar">
+				<div class="toolbar__center">Corona-Pandemie Quiz</div>
+			</div>
+			<div>
+				<div class="card">
+					<div class="card__content" id="frageText">???</div>
+				</div>
+				<div style="text-align:center">
+					<img id="bild1" width="95%" />
+				</div>
+				<div style="text-align:center;margin-bottom:10px; ">
+					<button id="antwortText1" class="button" style="width: 95%" onclick="pruefeAntwort(1)">
+						???
+					</button>
+				</div>
+				<div style="text-align:center;margin-bottom:10px; ">
+					<button id="antwortText2" class="button" style="width: 95%" onclick="pruefeAntwort(2)">
+						???
+					</button>
+				</div>
+				<div style="text-align:center;margin-bottom:10px; ">
+					<button id="antwortText3" class="button" style="width: 95%" onclick="pruefeAntwort(3)">
+						???
+					</button>
+				</div>
+				<div style="text-align:center;margin-bottom:10px; ">
+					<button id="antwortText4" class="button" style="width: 95%" onclick="pruefeAntwort(4)">
+						???
+					</button>
+				</div>
+				<div style="text-align:center;margin-bottom:10px; ">
+					<button class="button button--outline" style="width: 95%" onclick="nav.pushPage('home')">
+						abbrechen, zur Startseite
+					</button>
+				</div>
+			</div>
+		</ons-page>
+	</template>
+
+	<template id="frageMehrfach">
+		<ons-page>
+			<div class="toolbar">
+				<div class="toolbar__center">Corona-Pandemie Quiz</div>
+			</div>
+			<div class="card">
+				<div class="card__content" id="frageTextMehrfach">???</div>
+			</div>
+			<div class="card">
+				<label class="checkbox">
+					<input type="checkbox" class="checkbox__input" id="checkbox1">
+					<div class="checkbox__checkmark"></div>
+					<span id="mehrfachAntwort1">???</span>
+				</label><br /><br />
+				<label class="checkbox">
+					<input type="checkbox" class="checkbox__input" id="checkbox2">
+					<div class="checkbox__checkmark"></div>
+					<span id="mehrfachAntwort2">???</span>
+				</label><br /><br />
+				<label class="checkbox">
+					<input type="checkbox" class="checkbox__input" id="checkbox3">
+					<div class="checkbox__checkmark"></div>
+					<span id="mehrfachAntwort3">???</span>
+				</label><br /><br />
+				<label class="checkbox">
+					<input type="checkbox" class="checkbox__input" id="checkbox4">
+					<div class="checkbox__checkmark"></div>
+					<span id="mehrfachAntwort4">???</span>
+				</label><br /><br />
+			</div>
+			<div style="text-align:center;margin-bottom:10px; ">
+				<button class="button" style="width: 95%" onclick="pruefeAntwort(0)">
+					weiter
+				</button>
+			</div>
+			<div style="text-align:center;margin-bottom:10px; ">
+				<button class="button button--outline" style="width: 95%" onclick="nav.pushPage('home')">
+					abbrechen, zur Startseite
+				</button>
+			</div>
+		</ons-page>
+	</template>
+
+
+	<template id="frageJaNein">
+		<ons-page>
+			<div class="toolbar">
+				<div class="toolbar__center">Corona-Pandemie Quiz</div>
+			</div>
+			<div class="card">
+				<div class="card__content" id="frageTextJaNein">???</div>
+			</div>
+			<div style="text-align:center">
+				<img id="bild1" width="95%" />
+			</div>
+			<div class="card">
+				<label class="checkbox">
+					<input type="checkbox" class="checkbox__input" id="checkbox1">
+					<div class="checkbox__checkmark"></div>
+					<span id="JaNeinAntwort1">???</span>
+				</label><br /><br />
+				<label class="checkbox">
+					<input type="checkbox" class="checkbox__input" id="checkbox2">
+					<div class="checkbox__checkmark"></div>
+					<span id="JaNeinAntwort2">???</span>
+				</label><br /><br />
+			</div>
+			<div style="text-align:center;margin-bottom:10px; ">
+				<button class="button" style="width: 95%" onclick="pruefeAntwort(0)">
+					weiter
+				</button>
+			</div>
+			<div style="text-align:center;margin-bottom:10px; ">
+				<button class="button button--outline" style="width: 95%" onclick="nav.pushPage('home')">
+					abbrechen, zur Startseite
+				</button>
+			</div>
+		</ons-page>
+	</template>
+
+
+
+	<template id="frageAusfuellen">
+		<ons-page>
+			<div class="toolbar">
+				<div class="toolbar__center">Corona-Pandemie Quiz</div>
+			</div>
+			<div>
+				<div class="card">
+					<div class="card__content" id="frageText">???</div>
+				</div>
+				<div style="text-align:center">
+					<img id="bild1" width="95%" />
+				</div>
+				<div style="text-align:center;margin-bottom:10px; ">
+					<input type="text" class="text-input text-input--underbar" placeholder="Antwort" value=""
+					id="AusfuellenAntwort">
+				</div>
+				<div style="text-align:center;margin-bottom:10px; ">
+					<button class="button" style="width: 95%" onclick="pruefeAntwort(0)">
+						weiter
+					</button>
+				</div>
+				<div style="text-align:center;margin-bottom:10px; ">
+					<button class="button button--outline" style="width: 95%" onclick="nav.pushPage('home')">
+						abbrechen, zur Startseite
+					</button>
+				</div>
+			</div>
+		</ons-page>
+	</template>
+
+
+
+	<template id="auswertung">
+		<ons-page>
+			<div class="toolbar">
+				<div class="toolbar__center">Auswertung</div>
+			</div>
+			<div class="card">
+				<div class="card__content" id="text_aufloesung">???</div>
+			</div>
+			<div style="text-align:center;margin-bottom:10px; ">
+				<button class="button button--outline" style="width: 95%" onclick="naechsteFrage()">
+					nächste Frage
+				</button>
+			</div>
+		</ons-page>
+	</template>
+
+
+</body>
+<script src="quiz.js"></script>
+
+</html>
