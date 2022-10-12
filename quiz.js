@@ -65,15 +65,15 @@ function naechsteFrage() {
   } else if (runde == 2) {
     nav.resetToPage("frage").then(function () {
       document.getElementById("frageText").textContent =
-        "Unter dem R‑Wert wird die Reproduktionszahl R verstanden. Welche der unten aufgelisteten Beschreibungen bescreibt am besten, was die Reproduktionszahl bedeutet: ";
+        "Die Häufigkeit im Mittel der von einer infizierten Person angesteckten Menschen wird als _____ bezeichnet";
       document.getElementById("antwortText1").textContent =
-        "Häufigkeit im Mittel der von einer infizierten Person angesteckten Menschen";
+        "R-Wert";
       document.getElementById("antwortText2").textContent =
-        "Wie häufig Menschen durch eine infizierte Person sich anstecken. ";
+        "O-Wert";
       document.getElementById("antwortText3").textContent =
-        "Geschwindigkeit der Virusvermehrung im Körper einer infizierten Person. ";
+        "V-Wert";
       document.getElementById("antwortText4").textContent =
-        "Geschwindigkeit der Virusvermehrung innerhalb einer geographischen Zone ";
+        "G-Wert";
       document.getElementById("bild1").setAttribute("src", "grafik/r-wert.jpg");
     });
   } else if (runde == 3) {
@@ -106,7 +106,7 @@ function naechsteFrage() {
       document.getElementById("antwortText3").textContent =
         "Ständige Impfkommission";
       document.getElementById("antwortText4").textContent =
-        "Ständige Impfungskommissionierung";
+        "Stange-Impfkommission";
     });
   } else if (runde == 6) {
     nav.resetToPage("frageAusfuellen").then(function () {
