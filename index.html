@@ -76,9 +76,7 @@
                but usually full width toolbar is desired. */
 
 			/* Helper to center any div that wraps content */
-			div[style*="text-align:center"]>* {
-				/* This targets direct children of centered divs to ensure they respect max-width */
-			}
+
 
 			.card--image-wrapper {
 				background-color: transparent !important;
@@ -137,10 +135,10 @@
 				</label>
 
 				<label class="tabbar__item">
-					<input type="radio" name="tabbar-a">
+					<input type="radio" name="tabbar-a" onclick="nav.resetToPage('info')">
 					<button class="tabbar__button">
-						<i class="tabbar__icon ion-ios-help-circle"></i>
-						<div class="tabbar__label">Hilfe</div>
+						<i class="tabbar__icon ion-ios-information-circle"></i>
+						<div class="tabbar__label">Info</div>
 					</button>
 				</label>
 			</div>
@@ -221,22 +219,26 @@
 					<img id="bild1" width="100%" />
 				</div>
 				<div style="text-align:center;margin-bottom:10px; ">
-					<button id="antwortText1" class="button" style="width: 95%" onclick="pruefeAntwort(1)">
+					<button id="antwortText1" class="button button--outline" style="width: 95%"
+						onclick="selectAnswer(1)">
 						???
 					</button>
 				</div>
 				<div style="text-align:center;margin-bottom:10px; ">
-					<button id="antwortText2" class="button" style="width: 95%" onclick="pruefeAntwort(2)">
+					<button id="antwortText2" class="button button--outline" style="width: 95%"
+						onclick="selectAnswer(2)">
 						???
 					</button>
 				</div>
 				<div style="text-align:center;margin-bottom:10px; ">
-					<button id="antwortText3" class="button" style="width: 95%" onclick="pruefeAntwort(3)">
+					<button id="antwortText3" class="button button--outline" style="width: 95%"
+						onclick="selectAnswer(3)">
 						???
 					</button>
 				</div>
 				<div style="text-align:center;margin-bottom:10px; ">
-					<button id="antwortText4" class="button" style="width: 95%" onclick="pruefeAntwort(4)">
+					<button id="antwortText4" class="button button--outline" style="width: 95%"
+						onclick="selectAnswer(4)">
 						???
 					</button>
 				</div>
@@ -244,7 +246,7 @@
 				<br /><br />
 				<div style="text-align:center;margin-bottom:10px; ">
 					<button class="button" style="width: 95%" onclick="pruefeAntwort(0)">
-						weiter
+						Antwort einloggen
 					</button>
 				</div>
 				<div style="text-align:center;margin-bottom:10px; ">
@@ -288,7 +290,7 @@
 			</div>
 			<div style="text-align:center;margin-bottom:10px; ">
 				<button class="button" style="width: 95%" onclick="pruefeAntwort(0)">
-					weiter
+					Antwort einloggen
 				</button>
 			</div>
 			<div style="text-align:center;margin-bottom:10px; ">
@@ -325,7 +327,7 @@
 			</div>
 			<div style="text-align:center;margin-bottom:10px; ">
 				<button class="button" style="width: 95%" onclick="pruefeAntwort(0)">
-					weiter
+					Antwort einloggen
 				</button>
 			</div>
 			<div style="text-align:center;margin-bottom:10px; ">
@@ -356,7 +358,7 @@
 				</div>
 				<div style="text-align:center;margin-bottom:10px; ">
 					<button class="button" style="width: 95%" onclick="pruefeAntwort(0)">
-						weiter
+						Antwort einloggen
 					</button>
 				</div>
 				<div style="text-align:center;margin-bottom:10px; ">
@@ -388,26 +390,40 @@
 	<template id="end">
 		<ons-page>
 			<div class="toolbar">
-				<div class="toolbar__center">Corona-Pandemie Quiz</div>
+				<div class="toolbar__center">Auswertung</div>
 			</div>
-			<div>
-				<div class="card">
-					<h2 class="card__title">Ergebnis Deiner Corona-Pandemie Quiz</h2>
+			<div style="text-align: center; padding: 20px;">
+				<div id="end-icon" style="font-size: 80px; color: #ffd700; margin-top: 20px;">
+					<i class="ion-ios-trophy"></i>
+				</div>
+				<h2 id="end-message" style="margin-top: 10px; margin-bottom: 20px;">Super gemacht!</h2>
+
+				<div class="card" style="margin-bottom: 30px;">
 					<div class="card__content">
-						Vielen Dank fürs Spielen!
-						<br /><br />
-						Anzahl der richtigen Antworten: <div id="richtigeAntworten">Nr.RA</div>
-						Anzahl der falschen Antworten: <div id="falscheAntworten">Nr.FA</div>
+						<div style="display: flex; justify-content: space-around; font-size: 16px;">
+							<div style="text-align: center; color: #2e7d32;">
+								<div style="font-size: 32px;"><i class="ion-ios-checkmark-circle"></i></div>
+								<div style="font-weight: bold; font-size: 24px;" id="richtigeAntworten">0</div>
+								<div style="font-size: 12px; text-transform: uppercase; letter-spacing: 1px;">Richtig
+								</div>
+							</div>
+							<div style="height: 60px; border-left: 1px solid #eee;"></div>
+							<div style="text-align: center; color: #d32f2f;">
+								<div style="font-size: 32px;"><i class="ion-ios-close-circle"></i></div>
+								<div style="font-weight: bold; font-size: 24px;" id="falscheAntworten">0</div>
+								<div style="font-size: 12px; text-transform: uppercase; letter-spacing: 1px;">Falsch
+								</div>
+							</div>
+						</div>
 					</div>
 				</div>
-				<div style="text-align:center;margin-bottom:10px; ">
-					<button class="button" style="width: 95%" onclick="spielNeuStarten()">
+
+				<div>
+					<button class="button" style="width: 100%; margin-bottom: 15px;" onclick="spielNeuStarten()">
 						Neues Spiel starten
 					</button>
-				</div>
-				<div style="text-align:center;margin-bottom:10px; ">
-					<button class="button button--outline" style="width: 95%" onclick="spielNeuStarten()">
-						abbrechen, zur Startseite
+					<button class="button button--outline" style="width: 100%" onclick="spielNeuStarten()">
+						Zurück zur Startseite
 					</button>
 				</div>
 			</div>
@@ -419,6 +435,52 @@
 
 
 
+	<template id="info">
+		<ons-page>
+			<div class="toolbar">
+				<div class="toolbar__center">Info & Über</div>
+			</div>
+			<div style="padding: 10px;">
+				<div class="card">
+					<h2 class="card__title">Corona-Pandemie Quiz</h2>
+					<div class="card__content">
+						<p>Willkommen beim Corona-Pandemie Quiz. Teste Dein Wissen rund um das Virus, Maßnahmen und
+							medizinische Hintergründe.</p>
+						<p><strong>Version:</strong> 1.0</p>
+					</div>
+				</div>
+
+				<div class="card">
+					<h2 class="card__title">Funktionen</h2>
+					<div class="card__content">
+						<ul>
+							<li>Verschiedene Fragetypen: Ja/Nein, Multiple Choice, Texterkennung</li>
+							<li>Sofortiges Feedback nach jeder Frage</li>
+							<li>Umfangreiche Auswertung am Ende</li>
+							<li>Einstellungen für Spielerdaten</li>
+						</ul>
+					</div>
+				</div>
+
+				<div class="card">
+					<h2 class="card__title">Über den Autor</h2>
+					<div class="card__content">
+						<div style="text-align: center; margin-bottom: 10px;">
+							<i class="ion-ios-person" style="font-size: 48px; color: #666;"></i>
+						</div>
+						<p style="text-align: center; font-weight: bold;">Andres Fernandez Lebron</p>
+						<p style="text-align: center;">Entwicklung & Design</p>
+					</div>
+				</div>
+
+				<div style="text-align:center; margin-top: 20px;">
+					<button class="button button--outline" style="width: 100%" onclick="spielNeuStarten()">
+						Zurück zur Startseite
+					</button>
+				</div>
+			</div>
+		</ons-page>
+	</template>
 </body>
 <script src="quiz.js"></script>
 
