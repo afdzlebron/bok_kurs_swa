@@ -112,7 +112,7 @@
 						Wahr/Falsch-Antwort verlagen</div>
 				</div>
 				<div style="text-align:center">
-					<button class="button" style="width: 95%; margin: 0 auto;" onclick="naechsteFrage()">
+					<button class="button" style="width: 95%; margin: 0 auto;" onclick="nextQuestion()">
 						Quiz starten
 					</button>
 				</div>
@@ -127,7 +127,7 @@
 					</button>
 				</label>
 				<label class="tabbar__item">
-					<input type="radio" name="tabbar-a" onclick="nav.resetToPage('einstellungen')">
+					<input type="radio" name="tabbar-a" onclick="nav.resetToPage('settings')">
 					<button class="tabbar__button">
 						<i class="tabbar__icon ion-ios-settings"></i>
 						<div class="tabbar__label">Einstellungen</div>
@@ -146,7 +146,7 @@
 		</ons-page>
 	</template>
 
-	<template id="einstellungen">
+	<template id="settings">
 		<ons-page>
 			<div class="toolbar">
 				<div class="toolbar__center">Corona-Pandemie Quiz</div>
@@ -157,48 +157,49 @@
 				</div>
 				<div class="card">
 					<div><input type="text" class="text-input text-input--underbar" placeholder="Dein Name" value=""
-							id="spielername"></div>
+							id="playerName"></div>
 					<div><input type="text" class="text-input text-input--underbar" placeholder="Dein Name" value=""
 							disabled></div>
 				</div>
 				<div class="card">
 					<label class="radio-button radio-button--material">
 						<input type="radio" class="radio-button__input radio-button--material__input" name="r"
-							id="checkbox_f">
+							id="radio_female">
 						<div class="radio-button__checkmark radio-button--material__checkmark"></div>
 						Frau
 					</label>
 					<label class="radio-button radio-button--material">
 						<input type="radio" class="radio-button__input radio-button--material__input" name="r"
-							id="checkbox_m">
+							id="radio_male">
 						<div class="radio-button__checkmark radio-button--material__checkmark"></div>
 						Herr
 					</label>
 					<label class="radio-button radio-button--material">
 						<input type="radio" class="radio-button__input radio-button--material__input" name="r"
-							checked="checked" id="checkbox_d">
+							checked="checked" id="radio_diverse">
 						<div class="radio-button__checkmark radio-button--material__checkmark"></div>
 						Divers
 					</label>
 				</div>
 				<div class="card">Land:<br />
-					<select class="select-input select-input--material" id="land">
+					<select class="select-input select-input--material" id="country">
 						<option value="de">Deutschland</option>
 						<option value="at">Österreich</option>
 						<option value="ch">Schweiz</option>
 					</select>
 				</div>
 				<div class="card">
-					<div><input type="text" class="text-input text-input--underbar" placeholder="50" id="alter"></div>
+					<div><input type="text" class="text-input text-input--underbar" placeholder="50" id="ageInput">
+					</div>
 					<div><input type="text" class="text-input text-input--underbar" placeholder="Dein Alter" value=""
 							disabled></div>
 					<div class="range" style="width:100%">
-						<input id="slider1" type="range" class="range__input" oninput="aendereAlter();">
+						<input id="ageSlider" type="range" class="range__input" oninput="updateAge();">
 						<input type="range" class="range__focus-ring">
 					</div>
 				</div>
 				<div class="card">
-					<button onclick="speichereEinstellungen()" class="button button--outline" style="width: 95%">
+					<button onclick="saveSettings()" class="button button--outline" style="width: 95%">
 						Einstellungen speichern
 					</button>
 				</div>
@@ -206,51 +207,47 @@
 		</ons-page>
 	</template>
 
-	<template id="frage">
+	<template id="question">
 		<ons-page>
 			<div class="toolbar">
 				<div class="toolbar__center">Corona-Pandemie Quiz</div>
 			</div>
 			<div>
 				<div class="card">
-					<div class="card__content" id="frageText">???</div>
+					<div class="card__content" id="questionText">???</div>
 				</div>
 				<div class="card" style="text-align:center">
-					<img id="bild1" width="100%" />
+					<img id="questionImage" width="100%" />
 				</div>
 				<div style="text-align:center;margin-bottom:10px; ">
-					<button id="antwortText1" class="button button--outline" style="width: 95%"
-						onclick="selectAnswer(1)">
+					<button id="answerText1" class="button button--outline" style="width: 95%"
+						onclick="handleSelection(1)">
 						???
 					</button>
 				</div>
 				<div style="text-align:center;margin-bottom:10px; ">
-					<button id="antwortText2" class="button button--outline" style="width: 95%"
-						onclick="selectAnswer(2)">
+					<button id="answerText2" class="button button--outline" style="width: 95%"
+						onclick="handleSelection(2)">
 						???
 					</button>
 				</div>
 				<div style="text-align:center;margin-bottom:10px; ">
-					<button id="antwortText3" class="button button--outline" style="width: 95%"
-						onclick="selectAnswer(3)">
+					<button id="answerText3" class="button button--outline" style="width: 95%"
+						onclick="handleSelection(3)">
 						???
 					</button>
 				</div>
 				<div style="text-align:center;margin-bottom:10px; ">
-					<button id="antwortText4" class="button button--outline" style="width: 95%"
-						onclick="selectAnswer(4)">
+					<button id="answerText4" class="button button--outline" style="width: 95%"
+						onclick="handleSelection(4)">
 						???
 					</button>
 				</div>
 
 				<br /><br />
+				<!-- Submit button removed for single choice questions -->
 				<div style="text-align:center;margin-bottom:10px; ">
-					<button class="button" style="width: 95%" onclick="pruefeAntwort(0)">
-						Antwort einloggen
-					</button>
-				</div>
-				<div style="text-align:center;margin-bottom:10px; ">
-					<button class="button button--outline" style="width: 95%" onclick="spielNeuStarten()">
+					<button class="button button--outline" style="width: 95%" onclick="restartGame()">
 						abbrechen, zur Startseite
 					</button>
 				</div>
@@ -258,43 +255,43 @@
 		</ons-page>
 	</template>
 
-	<template id="frageMehrfach">
+	<template id="questionMultiple">
 		<ons-page>
 			<div class="toolbar">
 				<div class="toolbar__center">Corona-Pandemie Quiz</div>
 			</div>
 			<div class="card">
-				<div class="card__content" id="frageTextMehrfach">???</div>
+				<div class="card__content" id="questionTextMultiple">???</div>
 			</div>
 			<div class="card">
 				<label class="checkbox">
-					<input type="checkbox" class="checkbox__input" id="checkbox1">
+					<input type="checkbox" class="checkbox__input" id="checkbox_answer_1">
 					<div class="checkbox__checkmark"></div>
-					<span id="mehrfachAntwort1">???</span>
+					<span id="multipleChoiceText1">???</span>
 				</label><br /><br />
 				<label class="checkbox">
-					<input type="checkbox" class="checkbox__input" id="checkbox2">
+					<input type="checkbox" class="checkbox__input" id="checkbox_answer_2">
 					<div class="checkbox__checkmark"></div>
-					<span id="mehrfachAntwort2">???</span>
+					<span id="multipleChoiceText2">???</span>
 				</label><br /><br />
 				<label class="checkbox">
-					<input type="checkbox" class="checkbox__input" id="checkbox3">
+					<input type="checkbox" class="checkbox__input" id="checkbox_answer_3">
 					<div class="checkbox__checkmark"></div>
-					<span id="mehrfachAntwort3">???</span>
+					<span id="multipleChoiceText3">???</span>
 				</label><br /><br />
 				<label class="checkbox">
-					<input type="checkbox" class="checkbox__input" id="checkbox4">
+					<input type="checkbox" class="checkbox__input" id="checkbox_answer_4">
 					<div class="checkbox__checkmark"></div>
-					<span id="mehrfachAntwort4">???</span>
+					<span id="multipleChoiceText4">???</span>
 				</label><br /><br />
 			</div>
 			<div style="text-align:center;margin-bottom:10px; ">
-				<button class="button" style="width: 95%" onclick="pruefeAntwort(0)">
+				<button class="button" style="width: 95%" onclick="checkAnswer(0)">
 					Antwort einloggen
 				</button>
 			</div>
 			<div style="text-align:center;margin-bottom:10px; ">
-				<button class="button button--outline" style="width: 95%" onclick="spielNeuStarten()">
+				<button class="button button--outline" style="width: 95%" onclick="restartGame()">
 					abbrechen, zur Startseite
 				</button>
 			</div>
@@ -302,36 +299,34 @@
 	</template>
 
 
-	<template id="frageJaNein">
+	<template id="questionYesNo">
 		<ons-page>
 			<div class="toolbar">
 				<div class="toolbar__center">Corona-Pandemie Quiz</div>
 			</div>
 			<div class="card">
-				<div class="card__content" id="frageTextJaNein">???</div>
+				<div class="card__content" id="questionTextYesNo">???</div>
 			</div>
 			<div class="card" style="text-align:center">
-				<img id="bild1" width="100%" />
+				<img id="questionImage" width="100%" />
 			</div>
-			<div class="card">
-				<label class="checkbox">
-					<input type="checkbox" class="checkbox__input" id="checkbox1">
-					<div class="checkbox__checkmark"></div>
-					<span id="JaNeinAntwort1">???</span>
-				</label><br /><br />
-				<label class="checkbox">
-					<input type="checkbox" class="checkbox__input" id="checkbox2">
-					<div class="checkbox__checkmark"></div>
-					<span id="JaNeinAntwort2">???</span>
-				</label><br /><br />
-			</div>
-			<div style="text-align:center;margin-bottom:10px; ">
-				<button class="button" style="width: 95%" onclick="pruefeAntwort(0)">
-					Antwort einloggen
+			<!-- Replaced Checkboxes with Buttons for Auto-Submit -->
+			<div style="text-align:center;margin-bottom:10px;">
+				<button id="answerText1" class="button button--outline" style="width: 95%" onclick="handleSelection(1)">
+					<span id="yesNoAnswerText1">???</span>
 				</button>
 			</div>
+			<div style="text-align:center;margin-bottom:10px;">
+				<button id="answerText2" class="button button--outline" style="width: 95%" onclick="handleSelection(2)">
+					<span id="yesNoAnswerText2">???</span>
+				</button>
+			</div>
+
 			<div style="text-align:center;margin-bottom:10px; ">
-				<button class="button button--outline" style="width: 95%" onclick="spielNeuStarten()">
+				<!-- Submit button removed for yes/no question -->
+			</div>
+			<div style="text-align:center;margin-bottom:10px; ">
+				<button class="button button--outline" style="width: 95%" onclick="restartGame()">
 					abbrechen, zur Startseite
 				</button>
 			</div>
@@ -340,29 +335,29 @@
 
 
 
-	<template id="frageAusfuellen">
+	<template id="questionFillIn">
 		<ons-page>
 			<div class="toolbar">
 				<div class="toolbar__center">Corona-Pandemie Quiz</div>
 			</div>
 			<div>
 				<div class="card">
-					<div class="card__content" id="frageText">???</div>
+					<div class="card__content" id="questionText">???</div>
 				</div>
 				<div class="card" style="text-align:center">
-					<img id="bild1" width="100%" />
+					<img id="questionImage" width="100%" />
 				</div>
 				<div style="text-align:center;margin-bottom:10px; ">
 					<input type="text" class="text-input text-input--underbar" placeholder="Antwort" value=""
-						id="AusfuellenAntwort">
+						id="fillInAnswerInput">
 				</div>
 				<div style="text-align:center;margin-bottom:10px; ">
-					<button class="button" style="width: 95%" onclick="pruefeAntwort(0)">
+					<button class="button" style="width: 95%" onclick="checkAnswer(0)">
 						Antwort einloggen
 					</button>
 				</div>
 				<div style="text-align:center;margin-bottom:10px; ">
-					<button class="button button--outline" style="width: 95%" onclick="spielNeuStarten()">
+					<button class="button button--outline" style="width: 95%" onclick="restartGame()">
 						abbrechen, zur Startseite
 					</button>
 				</div>
@@ -372,16 +367,16 @@
 
 
 
-	<template id="auswertung">
+	<template id="evaluation">
 		<ons-page>
 			<div class="toolbar">
 				<div class="toolbar__center">Auswertung</div>
 			</div>
 			<div class="card">
-				<div class="card__content" id="text_aufloesung">???</div>
+				<div class="card__content" id="resolutionText">???</div>
 			</div>
 			<div style="text-align:center;margin-bottom:10px; ">
-				<button class="button button--outline" style="width: 95%" onclick="naechsteFrage()">
+				<button class="button button--outline" style="width: 95%" onclick="nextQuestion()">
 					nächste Frage
 				</button>
 			</div>
@@ -403,14 +398,14 @@
 						<div style="display: flex; justify-content: space-around; font-size: 16px;">
 							<div style="text-align: center; color: #2e7d32;">
 								<div style="font-size: 32px;"><i class="ion-ios-checkmark-circle"></i></div>
-								<div style="font-weight: bold; font-size: 24px;" id="richtigeAntworten">0</div>
+								<div style="font-weight: bold; font-size: 24px;" id="correctAnswersCount">0</div>
 								<div style="font-size: 12px; text-transform: uppercase; letter-spacing: 1px;">Richtig
 								</div>
 							</div>
 							<div style="height: 60px; border-left: 1px solid #eee;"></div>
 							<div style="text-align: center; color: #d32f2f;">
 								<div style="font-size: 32px;"><i class="ion-ios-close-circle"></i></div>
-								<div style="font-weight: bold; font-size: 24px;" id="falscheAntworten">0</div>
+								<div style="font-weight: bold; font-size: 24px;" id="wrongAnswersCount">0</div>
 								<div style="font-size: 12px; text-transform: uppercase; letter-spacing: 1px;">Falsch
 								</div>
 							</div>
@@ -419,10 +414,10 @@
 				</div>
 
 				<div>
-					<button class="button" style="width: 100%; margin-bottom: 15px;" onclick="spielNeuStarten()">
+					<button class="button" style="width: 100%; margin-bottom: 15px;" onclick="restartGame()">
 						Neues Spiel starten
 					</button>
-					<button class="button button--outline" style="width: 100%" onclick="spielNeuStarten()">
+					<button class="button button--outline" style="width: 100%" onclick="restartGame()">
 						Zurück zur Startseite
 					</button>
 				</div>
@@ -474,7 +469,7 @@
 				</div>
 
 				<div style="text-align:center; margin-top: 20px;">
-					<button class="button button--outline" style="width: 100%" onclick="spielNeuStarten()">
+					<button class="button button--outline" style="width: 100%" onclick="restartGame()">
 						Zurück zur Startseite
 					</button>
 				</div>

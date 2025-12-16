@@ -2,164 +2,164 @@
 
 
 let nav = document.getElementById("navigator");
-let richtigeAntworten = 0;
-let falscheAntworten = 0;
-let runde = 1;
+let correctAnswersCount = 0;
+let wrongAnswersCount = 0;
+let round = 1;
 let currentSelection = 0;
 let hasAnswered = false;
 
-let spielername = localStorage.getItem("sname");
-let spieleralter = 0;
-let land = "";
-let geschlecht = "";
+let playerName = localStorage.getItem("sname");
+let playerAge = 0;
+let country = "";
+let gender = "";
 
-function speichereEinstellungen() {
-  spielername = document.getElementById("spielername").value;
+function saveSettings() {
+  playerName = document.getElementById("playerName").value;
 
-  if (document.getElementById("checkbox_f").checked == true) {
-    geschlecht = "Frau";
-  } else if (document.getElementById("checkbox_m").checked == true) {
-    geschlecht = "Herr";
+  if (document.getElementById("radio_female").checked == true) {
+    gender = "Frau";
+  } else if (document.getElementById("radio_male").checked == true) {
+    gender = "Herr";
   } else {
-    geschlecht = "Divers";
+    gender = "Divers";
   }
 
-  land = document.getElementById("land").value;
+  country = document.getElementById("country").value;
 
-  if (isNaN(document.getElementById("alter").value)) {
+  if (isNaN(document.getElementById("ageInput").value)) {
     alert("Sie müssen bei Alter eine Zahl eingegebn!");
   } else {
-    spieleralter = document.getElementById("alter").value;
+    playerAge = document.getElementById("ageInput").value;
   }
 
   alert(
     "Folgende Daten wurden gespeichert: \nAlter: " +
-    spieleralter +
+    playerAge +
     " \nName: " +
-    spielername +
+    playerName +
     " \nLand: " +
-    land +
+    country +
     " \nAnrede: " +
-    geschlecht
+    gender
   );
 
   nav.pushPage("home");
 }
 
-function spielNeuStarten() {
-  runde = 1;
-  richtigeAntworten = 0;
-  falscheAntworten = 0;
+function restartGame() {
+  round = 1;
+  correctAnswersCount = 0;
+  wrongAnswersCount = 0;
   currentSelection = 0;
   hasAnswered = false;
   nav.resetToPage("home");
 }
 
-function aendereAlter() {
-  document.getElementById("alter").value =
-    document.getElementById("slider1").value;
+function updateAge() {
+  document.getElementById("ageInput").value =
+    document.getElementById("ageSlider").value;
 }
 
-function naechsteFrage() {
+function nextQuestion() {
   currentSelection = 0;
   hasAnswered = false;
-  if (runde == 1) {
-    nav.resetToPage("frageJaNein").then(function () {
-      document.getElementById("frageTextJaNein").textContent =
+  if (round == 1) {
+    nav.resetToPage("questionYesNo").then(function () {
+      document.getElementById("questionTextYesNo").textContent =
         "Sind Coronavirus, COVID-19 und SARS-COV-2 gleichbedeutend?";
-      document.getElementById("JaNeinAntwort1").textContent = "Ja";
-      document.getElementById("JaNeinAntwort2").textContent = "Nein";
+      document.getElementById("yesNoAnswerText1").textContent = "Ja";
+      document.getElementById("yesNoAnswerText2").textContent = "Nein";
       document
-        .getElementById("bild1")
+        .getElementById("questionImage")
         .setAttribute("src", "grafik/wordsalat.png");
     });
-  } else if (runde == 2) {
-    nav.resetToPage("frage").then(function () {
-      document.getElementById("frageText").textContent =
+  } else if (round == 2) {
+    nav.resetToPage("question").then(function () {
+      document.getElementById("questionText").textContent =
         "Die Häufigkeit im Mittel der von einer infizierten Person angesteckten Menschen wird als _____ bezeichnet";
-      document.getElementById("antwortText1").textContent =
+      document.getElementById("answerText1").textContent =
         "R-Wert";
-      document.getElementById("antwortText2").textContent =
+      document.getElementById("answerText2").textContent =
         "O-Wert";
-      document.getElementById("antwortText3").textContent =
+      document.getElementById("answerText3").textContent =
         "V-Wert";
-      document.getElementById("antwortText4").textContent =
+      document.getElementById("answerText4").textContent =
         "G-Wert";
-      document.getElementById("bild1").setAttribute("src", "grafik/graphic.png");
+      document.getElementById("questionImage").setAttribute("src", "grafik/graphic.png");
     });
-  } else if (runde == 3) {
-    nav.resetToPage("frage").then(function () {
-      document.getElementById("frageText").textContent =
+  } else if (round == 3) {
+    nav.resetToPage("question").then(function () {
+      document.getElementById("questionText").textContent =
         "Die 7-Tage-Inzidenz gibt die Anzahl von Personen pro _____ Einwohner an, die sich in den vergangenen 7 Tagen neu mit Corona infiziert haben";
-      document.getElementById("antwortText1").textContent =
+      document.getElementById("answerText1").textContent =
         "1,00,000 Einwohner";
-      document.getElementById("antwortText2").textContent = "100,000 Einwohner";
-      document.getElementById("antwortText3").textContent = "10,000 Einwohner";
-      document.getElementById("antwortText4").textContent = "1,000 Einwohner";
-      document.getElementById("bild1").setAttribute("src", "grafik/7tage.png");
+      document.getElementById("answerText2").textContent = "100,000 Einwohner";
+      document.getElementById("answerText3").textContent = "10,000 Einwohner";
+      document.getElementById("answerText4").textContent = "1,000 Einwohner";
+      document.getElementById("questionImage").setAttribute("src", "grafik/7tage.png");
     });
-  } else if (runde == 4) {
-    nav.resetToPage("frageAusfuellen").then(function () {
-      document.getElementById("frageText").textContent =
+  } else if (round == 4) {
+    nav.resetToPage("questionFillIn").then(function () {
+      document.getElementById("questionText").textContent =
         "Wie heißt die gesetzliche Grundlage für die Eindämmung der Sars-CoV-2-Pandemie in der Bundesrepublik Deutschland? (Erwartete Antwort: Abkürzung)";
       document
-        .getElementById("bild1")
+        .getElementById("questionImage")
         .setAttribute("src", "grafik/paragraph.jpg");
     });
-  } else if (runde == 5) {
-    nav.resetToPage("frage").then(function () {
-      document.getElementById("frageText").textContent =
+  } else if (round == 5) {
+    nav.resetToPage("question").then(function () {
+      document.getElementById("questionText").textContent =
         "Wofür steht die Abkürzung STIKO?";
-      document.getElementById("antwortText1").textContent =
+      document.getElementById("answerText1").textContent =
         "Ständige Impfen-kommission";
-      document.getElementById("antwortText2").textContent =
+      document.getElementById("answerText2").textContent =
         "Ständige Impfungskommissariat";
-      document.getElementById("antwortText3").textContent =
+      document.getElementById("answerText3").textContent =
         "Ständige Impfkommission";
-      document.getElementById("antwortText4").textContent =
+      document.getElementById("answerText4").textContent =
         "Stange-Impfkommission";
-      document.getElementById("bild1").setAttribute("src", "grafik/stiko.png");
+      document.getElementById("questionImage").setAttribute("src", "grafik/stiko.png");
     });
-  } else if (runde == 6) {
-    nav.resetToPage("frageAusfuellen").then(function () {
-      document.getElementById("frageText").textContent =
+  } else if (round == 6) {
+    nav.resetToPage("questionFillIn").then(function () {
+      document.getElementById("questionText").textContent =
         "Wie heißt die Person, die derzeit als Deutscher Bundesminister für Gesundheit dient.(Erwartete Antwort: 1. Vor- 2. Vor- Nachname)";
-      document.getElementById("bild1").setAttribute("src", "grafik/bmg.png");
+      document.getElementById("questionImage").setAttribute("src", "grafik/bmg.png");
     });
   }
-  else if (runde == 7) {
-    nav.resetToPage("frageMehrfach").then(function () {
-      document.getElementById("frageTextMehrfach").textContent =
+  else if (round == 7) {
+    nav.resetToPage("questionMultiple").then(function () {
+      document.getElementById("questionTextMultiple").textContent =
         "Die häufigsten Symptome bei Infektionen mit dem Coronavirus sind: ";
-      document.getElementById("mehrfachAntwort1").textContent = "Fieber";
-      document.getElementById("mehrfachAntwort2").textContent = "Halluzinationen";
-      document.getElementById("mehrfachAntwort3").textContent = "Krampfanfall";
-      document.getElementById("mehrfachAntwort4").textContent = "Husten";
+      document.getElementById("multipleChoiceText1").textContent = "Fieber";
+      document.getElementById("multipleChoiceText2").textContent = "Halluzinationen";
+      document.getElementById("multipleChoiceText3").textContent = "Krampfanfall";
+      document.getElementById("multipleChoiceText4").textContent = "Husten";
 
-      document.getElementById("bild1").setAttribute("src", "grafik/symptom.jpg");
+      document.getElementById("questionImage").setAttribute("src", "grafik/symptom.jpg");
     });
   }
 
-  else if (runde == 8) {
-    nav.resetToPage("frage").then(function () {
-      document.getElementById("frageText").textContent =
+  else if (round == 8) {
+    nav.resetToPage("question").then(function () {
+      document.getElementById("questionText").textContent =
         "JOKER-Frage:   Wie heißt die neueste Variante des Corona-Virus? \n Bei einer richtigen Antwort werden die Hälfte der falschen Antworten entfernt";
-      document.getElementById("antwortText1").textContent =
+      document.getElementById("answerText1").textContent =
         "Omega";
-      document.getElementById("antwortText2").textContent =
+      document.getElementById("answerText2").textContent =
         "Omigron";
-      document.getElementById("antwortText3").textContent =
+      document.getElementById("answerText3").textContent =
         "Omikron";
-      document.getElementById("antwortText4").textContent =
+      document.getElementById("answerText4").textContent =
         "Omicron";
-      document.getElementById("bild1").setAttribute("src", "grafik/joker.jpg");
+      document.getElementById("questionImage").setAttribute("src", "grafik/joker.jpg");
     });
   }
 
 
   else {
     nav.resetToPage("end").then(function () {
-      let isGood = richtigeAntworten >= falscheAntworten;
+      let isGood = correctAnswersCount >= wrongAnswersCount;
       let message = "";
       if (isGood) {
         message = "Super gemacht!";
@@ -177,8 +177,8 @@ function naechsteFrage() {
         iconContainer.style.display = "none";
       }
 
-      document.getElementById("richtigeAntworten").textContent = richtigeAntworten;
-      document.getElementById("falscheAntworten").textContent = falscheAntworten;
+      document.getElementById("correctAnswersCount").textContent = correctAnswersCount;
+      document.getElementById("wrongAnswersCount").textContent = wrongAnswersCount;
     });
   }
 }
@@ -189,7 +189,7 @@ function selectAnswer(n) {
 
   // Visual Feedback
   for (let i = 1; i <= 4; i++) {
-    let btn = document.getElementById("antwortText" + i);
+    let btn = document.getElementById("answerText" + i);
     if (btn) {
       if (i === n) {
         btn.classList.remove("button--outline");
@@ -198,6 +198,11 @@ function selectAnswer(n) {
       }
     }
   }
+}
+
+function handleSelection(n) {
+  selectAnswer(n);
+  checkAnswer(0);
 }
 
 function handleResult(isCorrect) {
@@ -218,45 +223,19 @@ function handleResult(isCorrect) {
     callback: function (idx) {
       if (idx === 0) { // "Weiter" clicked
         if (isCorrect) {
-          richtigeAntworten++;
+          correctAnswersCount++;
         } else {
-          falscheAntworten++;
+          wrongAnswersCount++;
         }
 
-        // Handle Joker round logic if needed (it was logic specific to round 8 correct answer)
-        // But looking at original code, round 8 correct answer had specific logic:
-        // falscheAntworten = falscheAntworten - (falscheAntworten % 2);
-        // We need to preserve this specific logic.
-        // Let's pass a callback or handle it in the main flow? 
-        // Actually, let's keep the increment logic outside or pass it in.
-        // EXCEPT: The prompt implies simple "Richtig" or "Falsch". 
-        // However, the original code had specific logic for scoring.
-        // Let's adjust handleResult to be simple UI, and keeping state update logic in pruefeAntwort might be tricky if we want "Weiter" to trigger it.
-        // Better approach: State update happens on "Weiter"? 
-        // Risk: User sees "Richtig", closes dialog, sees question again.
-        // If they click "Weiter" later, should it re-score? 
-        // Or should scoring happen immediately and "Weiter" just navigates?
-        // If scoring happens immediately, then "Close" allows them to see the question but they can't change the answer?
-        // The prompt says: "Close just closes the alarm msg pop up, and continue send the user two the next question".
-        // This implies they successfully answered.
-        // If I update score immediately:
-        // User answers -> Score++ -> Dialog. 
-        // User closes dialog. User is on same page. 
-        // User clicks answer again -> Score++ again? PROBLEM.
-        //
-        // Solution: Only update score when proceeding to next question?
-        // Or disable buttons?
-        // Let's follow the prompt: "continue send the user two the next question".
-        // Use a callback for the "continue" action.
-
-        runde++;
-        naechsteFrage();
+        round++;
+        nextQuestion();
       }
     }
   });
 }
 
-function pruefeAntwort(antwortNr) {
+function checkAnswer(antwortNr) {
   // If called with 0 (Submit), proceed.
   if (antwortNr !== 0) return; // Should not happen with new HTML, but safety check.
 
@@ -266,29 +245,28 @@ function pruefeAntwort(antwortNr) {
   let isCorrect = false;
   let isJokerCorrect = false;
 
-  if (runde == 1) {
-    if (document.getElementById("checkbox1").checked == false &&
-      document.getElementById("checkbox2").checked == true) {
+  if (round == 1) {
+    if (currentSelection == 2) {
       isCorrect = true;
     }
-  } else if (runde == 2) {
+  } else if (round == 2) {
     if (currentSelection == 1) isCorrect = true;
-  } else if (runde == 3) {
+  } else if (round == 3) {
     if (currentSelection == 2) isCorrect = true;
-  } else if (runde == 4) {
-    if (document.getElementById("AusfuellenAntwort").value == "IfSG") isCorrect = true;
-  } else if (runde == 5) {
+  } else if (round == 4) {
+    if (document.getElementById("fillInAnswerInput").value == "IfSG") isCorrect = true;
+  } else if (round == 5) {
     if (currentSelection == 3) isCorrect = true;
-  } else if (runde == 6) {
-    if (document.getElementById("AusfuellenAntwort").value == "Karl Wilhelm Lauterbach") isCorrect = true;
-  } else if (runde == 7) {
-    if (document.getElementById("checkbox1").checked == true &&
-      document.getElementById("checkbox2").checked == false &&
-      document.getElementById("checkbox3").checked == false &&
-      document.getElementById("checkbox4").checked == true) {
+  } else if (round == 6) {
+    if (document.getElementById("fillInAnswerInput").value == "Karl Wilhelm Lauterbach") isCorrect = true;
+  } else if (round == 7) {
+    if (document.getElementById("checkbox_answer_1").checked == true &&
+      document.getElementById("checkbox_answer_2").checked == false &&
+      document.getElementById("checkbox_answer_3").checked == false &&
+      document.getElementById("checkbox_answer_4").checked == true) {
       isCorrect = true;
     }
-  } else if (runde == 8) {
+  } else if (round == 8) {
     if (currentSelection == 3) {
       isCorrect = true;
       isJokerCorrect = true;
@@ -312,15 +290,15 @@ function pruefeAntwort(antwortNr) {
     callback: function (idx) {
       if (idx === 0) { // Weiter
         if (isCorrect) {
-          richtigeAntworten++;
+          correctAnswersCount++;
           if (isJokerCorrect) {
-            falscheAntworten = falscheAntworten - (falscheAntworten % 2);
+            wrongAnswersCount = wrongAnswersCount - (wrongAnswersCount % 2);
           }
         } else {
-          falscheAntworten++;
+          wrongAnswersCount++;
         }
-        runde++;
-        naechsteFrage();
+        round++;
+        nextQuestion();
       }
     }
   });
