@@ -120,7 +120,7 @@ function saveSettings() {
   nav.pushPage("home");
 }
 
-function restartGame() {
+function restartQuiz() {
   round = 1;
   correctAnswersCount = 0;
   wrongAnswersCount = 0;
