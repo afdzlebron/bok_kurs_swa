@@ -12,6 +12,70 @@
 	<link rel="stylesheet" href="onsen2.11.2/css/onsen-css-components.min.css">
 	<script src="onsen2.11.2/js/onsenui.min.js"></script>
 	<title>Corona-Pandemie Quiz</title>
+	<style>
+		@media screen and (min-width: 600px) {
+
+			/* Keep the page background and layout native-like, effectively undoing the previous "box" */
+			body {
+				background-color: transparent;
+			}
+
+			/* Constrain the readable content */
+			.card {
+				max-width: 600px;
+				margin-left: auto !important;
+				margin-right: auto !important;
+			}
+
+			/* Center and constrain images */
+			img {
+				max-width: 600px;
+				max-height: 50vh;
+				/* Don't let images take over the whole screen height on desktop */
+				object-fit: contain;
+			}
+
+			/* Constrain lists/checkboxes/radio buttons containers if any */
+			.list,
+			.list-item,
+			.checkbox,
+			.radio-button {
+				max-width: 600px;
+				margin-left: auto !important;
+				margin-right: auto !important;
+				display: block;
+				/* Ensure they behave like blocks for margin auto to work */
+			}
+
+			/* Fix for tabbar labels if they stretch */
+			.tabbar__button {
+				max-width: none;
+				/* Tabbar should probably stay full width distributed */
+			}
+
+			/* Constrain action buttons */
+			.button {
+				max-width: 600px;
+				/* margin: 0 auto is already largely handled by the parent div text-align:center in many places, 
+                   but let's ensure it doesn't stretch if it's display:block */
+			}
+
+			/* Center the inputs/content in the cards if they are full width */
+			.text-input,
+			.search-input {
+				max-width: 100%;
+				/* Let them fill the card but not more */
+			}
+
+			/* ensure the center content area of the toolbar doesn't look weird if needed, 
+               but usually full width toolbar is desired. */
+
+			/* Helper to center any div that wraps content */
+			div[style*="text-align:center"]>* {
+				/* This targets direct children of centered divs to ensure they respect max-width */
+			}
+		}
+	</style>
 </head>
 
 <body>
@@ -340,7 +404,7 @@
 						Vielen Dank fürs Spielen!
 						<br /><br />
 						Anzahl der richtigen Antworten: <div id="richtigeAntworten">Nr.RA</div>
-						Anzahl der falschen Antworten: <div id="falscheAntworten">Nr.FA</div> 
+						Anzahl der falschen Antworten: <div id="falscheAntworten">Nr.FA</div>
 					</div>
 				</div>
 				<div style="text-align:center;margin-bottom:10px; ">
