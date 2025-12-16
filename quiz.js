@@ -13,6 +13,80 @@ let playerAge = 0;
 let country = "";
 let gender = "";
 
+const questions = [
+  {
+    type: "yes_no",
+    template: "questionYesNo",
+    text: "Sind Coronavirus, COVID-19 und SARS-COV-2 gleichbedeutend?",
+    image: "grafik/wordsalat.png",
+    altText: "Wortwolke mit Begriffen zu Coronavirus",
+    answers: ["Ja", "Nein"],
+    correctAnswerIndex: 1 // "Nein"
+  },
+  {
+    type: "single_choice",
+    template: "question",
+    text: "Die Häufigkeit im Mittel der von einer infizierten Person angesteckten Menschen wird als _____ bezeichnet",
+    image: "grafik/graphic.png",
+    altText: "Grafik zur Ausbreitung des Virus",
+    answers: ["R-Wert", "O-Wert", "V-Wert", "G-Wert"],
+    correctAnswerIndex: 0 // "R-Wert"
+  },
+  {
+    type: "single_choice",
+    template: "question",
+    text: "Die 7-Tage-Inzidenz gibt die Anzahl von Personen pro _____ Einwohner an, die sich in den vergangenen 7 Tagen neu mit Corona infiziert haben",
+    image: "grafik/7tage.png",
+    altText: "Kalenderblatt mit 7 Tagen markiert",
+    answers: ["1,00,000 Einwohner", "100,000 Einwohner", "10,000 Einwohner", "1,000 Einwohner"],
+    correctAnswerIndex: 1 // "100,000 Einwohner"
+  },
+  {
+    type: "fill_in",
+    template: "questionFillIn",
+    text: "Wie heißt die gesetzliche Grundlage für die Eindämmung der Sars-CoV-2-Pandemie in der Bundesrepublik Deutschland? (Erwartete Antwort: Abkürzung)",
+    image: "grafik/paragraph.jpg",
+    altText: "Paragraphenzeichen",
+    correctAnswer: "IfSG"
+  },
+  {
+    type: "single_choice",
+    template: "question",
+    text: "Wofür steht die Abkürzung STIKO?",
+    image: "grafik/stiko.png",
+    altText: "Logo der STIKO",
+    answers: ["Ständige Impfen-kommission", "Ständige Impfungskommissariat", "Ständige Impfkommission", "Stange-Impfkommission"],
+    correctAnswerIndex: 2 // "Ständige Impfkommission"
+  },
+  {
+    type: "fill_in",
+    template: "questionFillIn",
+    text: "Wie heißt die Person, die derzeit als Deutscher Bundesminister für Gesundheit dient.(Erwartete Antwort: 1. Vor- 2. Vor- Nachname)",
+    image: "grafik/bmg.png",
+    altText: "Bundesministerium für Gesundheit",
+    correctAnswer: "Karl Wilhelm Lauterbach"
+  },
+  {
+    type: "multiple_select",
+    template: "questionMultiple",
+    text: "Die häufigsten Symptome bei Infektionen mit dem Coronavirus sind: ",
+    image: "grafik/symptom.jpg",
+    altText: "Grafik von Krankheitssymptomen",
+    answers: ["Fieber", "Halluzinationen", "Krampfanfall", "Husten"],
+    correctAnswerIndices: [0, 3] // "Fieber", "Husten" (Indices 0 and 3)
+  },
+  {
+    type: "single_choice",
+    template: "question",
+    text: "JOKER-Frage:   Wie heißt die neueste Variante des Corona-Virus? \n Bei einer richtigen Antwort werden die Hälfte der falschen Antworten entfernt",
+    image: "grafik/joker.jpg",
+    altText: "Joker Karte",
+    answers: ["Omega", "Omigron", "Omikron", "Omicron"],
+    correctAnswerIndex: 2, // "Omikron"
+    isJoker: true
+  }
+];
+
 function saveSettings() {
   playerName = document.getElementById("playerName").value;
 
@@ -63,101 +137,9 @@ function updateAge() {
 function nextQuestion() {
   currentSelection = 0;
   hasAnswered = false;
-  if (round == 1) {
-    nav.resetToPage("questionYesNo").then(function () {
-      document.getElementById("questionTextYesNo").textContent =
-        "Sind Coronavirus, COVID-19 und SARS-COV-2 gleichbedeutend?";
-      document.getElementById("yesNoAnswerText1").textContent = "Ja";
-      document.getElementById("yesNoAnswerText2").textContent = "Nein";
-      document
-        .getElementById("questionImage")
-        .setAttribute("src", "grafik/wordsalat.png");
-    });
-  } else if (round == 2) {
-    nav.resetToPage("question").then(function () {
-      document.getElementById("questionText").textContent =
-        "Die Häufigkeit im Mittel der von einer infizierten Person angesteckten Menschen wird als _____ bezeichnet";
-      document.getElementById("answerText1").textContent =
-        "R-Wert";
-      document.getElementById("answerText2").textContent =
-        "O-Wert";
-      document.getElementById("answerText3").textContent =
-        "V-Wert";
-      document.getElementById("answerText4").textContent =
-        "G-Wert";
-      document.getElementById("questionImage").setAttribute("src", "grafik/graphic.png");
-    });
-  } else if (round == 3) {
-    nav.resetToPage("question").then(function () {
-      document.getElementById("questionText").textContent =
-        "Die 7-Tage-Inzidenz gibt die Anzahl von Personen pro _____ Einwohner an, die sich in den vergangenen 7 Tagen neu mit Corona infiziert haben";
-      document.getElementById("answerText1").textContent =
-        "1,00,000 Einwohner";
-      document.getElementById("answerText2").textContent = "100,000 Einwohner";
-      document.getElementById("answerText3").textContent = "10,000 Einwohner";
-      document.getElementById("answerText4").textContent = "1,000 Einwohner";
-      document.getElementById("questionImage").setAttribute("src", "grafik/7tage.png");
-    });
-  } else if (round == 4) {
-    nav.resetToPage("questionFillIn").then(function () {
-      document.getElementById("questionText").textContent =
-        "Wie heißt die gesetzliche Grundlage für die Eindämmung der Sars-CoV-2-Pandemie in der Bundesrepublik Deutschland? (Erwartete Antwort: Abkürzung)";
-      document
-        .getElementById("questionImage")
-        .setAttribute("src", "grafik/paragraph.jpg");
-    });
-  } else if (round == 5) {
-    nav.resetToPage("question").then(function () {
-      document.getElementById("questionText").textContent =
-        "Wofür steht die Abkürzung STIKO?";
-      document.getElementById("answerText1").textContent =
-        "Ständige Impfen-kommission";
-      document.getElementById("answerText2").textContent =
-        "Ständige Impfungskommissariat";
-      document.getElementById("answerText3").textContent =
-        "Ständige Impfkommission";
-      document.getElementById("answerText4").textContent =
-        "Stange-Impfkommission";
-      document.getElementById("questionImage").setAttribute("src", "grafik/stiko.png");
-    });
-  } else if (round == 6) {
-    nav.resetToPage("questionFillIn").then(function () {
-      document.getElementById("questionText").textContent =
-        "Wie heißt die Person, die derzeit als Deutscher Bundesminister für Gesundheit dient.(Erwartete Antwort: 1. Vor- 2. Vor- Nachname)";
-      document.getElementById("questionImage").setAttribute("src", "grafik/bmg.png");
-    });
-  }
-  else if (round == 7) {
-    nav.resetToPage("questionMultiple").then(function () {
-      document.getElementById("questionTextMultiple").textContent =
-        "Die häufigsten Symptome bei Infektionen mit dem Coronavirus sind: ";
-      document.getElementById("multipleChoiceText1").textContent = "Fieber";
-      document.getElementById("multipleChoiceText2").textContent = "Halluzinationen";
-      document.getElementById("multipleChoiceText3").textContent = "Krampfanfall";
-      document.getElementById("multipleChoiceText4").textContent = "Husten";
 
-      document.getElementById("questionImage").setAttribute("src", "grafik/symptom.jpg");
-    });
-  }
-
-  else if (round == 8) {
-    nav.resetToPage("question").then(function () {
-      document.getElementById("questionText").textContent =
-        "JOKER-Frage:   Wie heißt die neueste Variante des Corona-Virus? \n Bei einer richtigen Antwort werden die Hälfte der falschen Antworten entfernt";
-      document.getElementById("answerText1").textContent =
-        "Omega";
-      document.getElementById("answerText2").textContent =
-        "Omigron";
-      document.getElementById("answerText3").textContent =
-        "Omikron";
-      document.getElementById("answerText4").textContent =
-        "Omicron";
-      document.getElementById("questionImage").setAttribute("src", "grafik/joker.jpg");
-    });
-  }
-
-
-  else {
+  if (round > questions.length) {
+    // Game Over
     nav.resetToPage("end").then(function () {
       let isGood = correctAnswersCount >= wrongAnswersCount;
       let message = "";
@@ -180,7 +162,46 @@ function nextQuestion() {
       document.getElementById("correctAnswersCount").textContent = correctAnswersCount;
       document.getElementById("wrongAnswersCount").textContent = wrongAnswersCount;
     });
+    return;
   }
+
+  const q = questions[round - 1];
+
+  nav.resetToPage(q.template).then(function () {
+    // Update Progress Counter if it exists
+    let progressEl = document.getElementById("progressCounter");
+    if (progressEl) {
+      progressEl.textContent = "Frage " + round + " von " + questions.length;
+    }
+
+    // Set Question Text and Image
+    // Note: IDs in HTML templates must match these generic expectations or be handled per template
+    let textEl = document.getElementById("questionText"); // Default
+    if (q.type === 'yes_no') textEl = document.getElementById("questionTextYesNo");
+    else if (q.type === 'multiple_select') textEl = document.getElementById("questionTextMultiple");
+
+    if (textEl) textEl.textContent = q.text;
+
+    let imgEl = document.getElementById("questionImage");
+    if (imgEl) {
+      imgEl.setAttribute("src", q.image);
+      imgEl.setAttribute("alt", q.altText);
+    }
+
+    // Populate Answers
+    if (q.type === 'yes_no') {
+      document.getElementById("yesNoAnswerText1").textContent = q.answers[0];
+      document.getElementById("yesNoAnswerText2").textContent = q.answers[1];
+    } else if (q.type === 'single_choice' || q.type === 'multiple_select') {
+      for (let i = 0; i < q.answers.length; i++) {
+        // Handle ID differences: answerText1 vs multipleChoiceText1
+        let idPrefix = (q.type === 'multiple_select') ? "multipleChoiceText" : "answerText";
+        let btn = document.getElementById(idPrefix + (i + 1));
+        if (btn) btn.textContent = q.answers[i];
+      }
+    }
+    // Fill-in requires no answer population
+  });
 }
 
 function selectAnswer(n) {
@@ -205,39 +226,9 @@ function handleSelection(n) {
   checkAnswer(0);
 }
 
-function handleResult(isCorrect) {
-  let title = "";
-  let message = "";
-  if (isCorrect) {
-    title = "Richtig";
-    message = "Deine Antwort ist richtig!";
-  } else {
-    title = "Falsche Antwort";
-    message = "Deine Antwort ist leider falsch.";
-  }
-
-  ons.notification.confirm({
-    title: title,
-    message: message,
-    buttonLabels: ["Weiter"],
-    callback: function (idx) {
-      if (idx === 0) { // "Weiter" clicked
-        if (isCorrect) {
-          correctAnswersCount++;
-        } else {
-          wrongAnswersCount++;
-        }
-
-        round++;
-        nextQuestion();
-      }
-    }
-  });
-}
-
 function checkAnswer(antwortNr) {
   // If called with 0 (Submit), proceed.
-  if (antwortNr !== 0) return; // Should not happen with new HTML, but safety check.
+  if (antwortNr !== 0) return;
 
   if (hasAnswered) return;
   hasAnswered = true;
@@ -245,31 +236,38 @@ function checkAnswer(antwortNr) {
   let isCorrect = false;
   let isJokerCorrect = false;
 
-  if (round == 1) {
-    if (currentSelection == 2) {
+  const q = questions[round - 1];
+
+  if (q.type === 'yes_no') {
+    // Yes is index 0 (value 1), No is index 1 (value 2)
+    // Correct answer index in data is 0-based.
+    // currentSelection is 1-based (from UI).
+    if ((currentSelection - 1) === q.correctAnswerIndex) {
       isCorrect = true;
     }
-  } else if (round == 2) {
-    if (currentSelection == 1) isCorrect = true;
-  } else if (round == 3) {
-    if (currentSelection == 2) isCorrect = true;
-  } else if (round == 4) {
-    if (document.getElementById("fillInAnswerInput").value == "IfSG") isCorrect = true;
-  } else if (round == 5) {
-    if (currentSelection == 3) isCorrect = true;
-  } else if (round == 6) {
-    if (document.getElementById("fillInAnswerInput").value == "Karl Wilhelm Lauterbach") isCorrect = true;
-  } else if (round == 7) {
-    if (document.getElementById("checkbox_answer_1").checked == true &&
-      document.getElementById("checkbox_answer_2").checked == false &&
-      document.getElementById("checkbox_answer_3").checked == false &&
-      document.getElementById("checkbox_answer_4").checked == true) {
+  } else if (q.type === 'single_choice') {
+    if ((currentSelection - 1) === q.correctAnswerIndex) {
+      isCorrect = true;
+      if (q.isJoker) isJokerCorrect = true;
+    }
+  } else if (q.type === 'fill_in') {
+    let input = document.getElementById("fillInAnswerInput").value;
+    // Robust validation: trim and lowercase
+    if (input.trim().toLowerCase() === q.correctAnswer.trim().toLowerCase()) {
       isCorrect = true;
     }
-  } else if (round == 8) {
-    if (currentSelection == 3) {
+  } else if (q.type === 'multiple_select') {
+    // Hardcoded logic for checkboxes based on Round 7 indices [0, 3] (1 and 4 in UI)
+    // We can make this dynamic if needed, but for now specific checking logic:
+    let c1 = document.getElementById("checkbox_answer_1").checked;
+    let c2 = document.getElementById("checkbox_answer_2").checked;
+    let c3 = document.getElementById("checkbox_answer_3").checked;
+    let c4 = document.getElementById("checkbox_answer_4").checked;
+
+    // Check against q.correctAnswerIndices
+    // Correct are 0 and 3 (1 and 4)
+    if (c1 && !c2 && !c3 && c4) {
       isCorrect = true;
-      isJokerCorrect = true;
     }
   }
 
@@ -277,7 +275,10 @@ function checkAnswer(antwortNr) {
   let message = "";
   if (isCorrect) {
     title = "Richtig";
-    message = "Weiter so!";
+    message = "Richtig! " + (isCorrect && !isJokerCorrect && q.type !== 'fill_in' ? "" : ""); // Custom messages could be added
+    if (q.type === 'fill_in') message = "Deine Antwort ist richtig!";
+    else message = "Weiter so!";
+
   } else {
     title = "Falsche Antwort";
     message = "Das war leider nicht korrekt.";
@@ -288,15 +289,21 @@ function checkAnswer(antwortNr) {
     message: message,
     buttonLabels: ["Weiter"],
     callback: function (idx) {
-      if (idx === 0) { // Weiter
+      if (idx === 0) { // "Weiter" clicked
         if (isCorrect) {
           correctAnswersCount++;
           if (isJokerCorrect) {
-            wrongAnswersCount = wrongAnswersCount - (wrongAnswersCount % 2);
+            // Joker bonus: remove half of wrong answers from score?
+            // Original logic: wrongAnswersCount = wrongAnswersCount - (wrongAnswersCount % 2);
+            // Wait, original logic was: if joker correct, reduce bad points? 
+            // "Bei einer richtigen Antwort werden die Hälfte der falschen Antworten entfernt"
+            // Implementation:
+            wrongAnswersCount = Math.floor(wrongAnswersCount / 2);
           }
         } else {
           wrongAnswersCount++;
         }
+
         round++;
         nextQuestion();
       }
