@@ -29,10 +29,15 @@
 
 			/* Center and constrain images */
 			img {
+				width: 100% !important;
+				/* Override explicit width attribute */
 				max-width: 600px;
-				max-height: 50vh;
+				height: auto;
 				/* Don't let images take over the whole screen height on desktop */
-				object-fit: contain;
+				display: block;
+				/* Ensure margin auto works */
+				margin-left: auto;
+				margin-right: auto;
 			}
 
 			/* Constrain lists/checkboxes/radio buttons containers if any */
@@ -74,6 +79,14 @@
 			div[style*="text-align:center"]>* {
 				/* This targets direct children of centered divs to ensure they respect max-width */
 			}
+
+			.card--image-wrapper {
+				background-color: transparent !important;
+				box-shadow: none !important;
+				padding: 0 !important;
+				margin-left: auto !important;
+				margin-right: auto !important;
+			}
 		}
 	</style>
 </head>
@@ -92,8 +105,8 @@
 					<h2 class="card__title">Corona-Pandemie Quiz</h2>
 					<div class="card__content"> Fragen zur Themen aus der Corona-Pandemie</div>
 				</div>
-				<div style="text-align:center">
-					<img src="grafik/coronavirus.jpg" width="95%" />
+				<div class="card card--image-wrapper" style="text-align:center">
+					<img src="grafik/coronavirus.jpg" width="100%" />
 				</div>
 				<!-- <img src="grafik/coronavirus.jpg" width="100%"/> -->
 				<div class="card">
@@ -204,8 +217,8 @@
 				<div class="card">
 					<div class="card__content" id="frageText">???</div>
 				</div>
-				<div style="text-align:center">
-					<img id="bild1" width="95%" />
+				<div class="card" style="text-align:center">
+					<img id="bild1" width="100%" />
 				</div>
 				<div style="text-align:center;margin-bottom:10px; ">
 					<button id="antwortText1" class="button" style="width: 95%" onclick="pruefeAntwort(1)">
@@ -235,7 +248,7 @@
 					</button>
 				</div>
 				<div style="text-align:center;margin-bottom:10px; ">
-					<button class="button button--outline" style="width: 95%" onclick="nav.pushPage('home')">
+					<button class="button button--outline" style="width: 95%" onclick="spielNeuStarten()">
 						abbrechen, zur Startseite
 					</button>
 				</div>
@@ -279,7 +292,7 @@
 				</button>
 			</div>
 			<div style="text-align:center;margin-bottom:10px; ">
-				<button class="button button--outline" style="width: 95%" onclick="nav.pushPage('home')">
+				<button class="button button--outline" style="width: 95%" onclick="spielNeuStarten()">
 					abbrechen, zur Startseite
 				</button>
 			</div>
@@ -295,8 +308,8 @@
 			<div class="card">
 				<div class="card__content" id="frageTextJaNein">???</div>
 			</div>
-			<div style="text-align:center">
-				<img id="bild1" width="95%" />
+			<div class="card" style="text-align:center">
+				<img id="bild1" width="100%" />
 			</div>
 			<div class="card">
 				<label class="checkbox">
@@ -316,7 +329,7 @@
 				</button>
 			</div>
 			<div style="text-align:center;margin-bottom:10px; ">
-				<button class="button button--outline" style="width: 95%" onclick="nav.pushPage('home')">
+				<button class="button button--outline" style="width: 95%" onclick="spielNeuStarten()">
 					abbrechen, zur Startseite
 				</button>
 			</div>
@@ -334,8 +347,8 @@
 				<div class="card">
 					<div class="card__content" id="frageText">???</div>
 				</div>
-				<div style="text-align:center">
-					<img id="bild1" width="95%" />
+				<div class="card" style="text-align:center">
+					<img id="bild1" width="100%" />
 				</div>
 				<div style="text-align:center;margin-bottom:10px; ">
 					<input type="text" class="text-input text-input--underbar" placeholder="Antwort" value=""
@@ -347,7 +360,7 @@
 					</button>
 				</div>
 				<div style="text-align:center;margin-bottom:10px; ">
-					<button class="button button--outline" style="width: 95%" onclick="nav.pushPage('home')">
+					<button class="button button--outline" style="width: 95%" onclick="spielNeuStarten()">
 						abbrechen, zur Startseite
 					</button>
 				</div>
@@ -372,26 +385,6 @@
 			</div>
 		</ons-page>
 	</template>
-
-
-	<!-- <template id="auswertungFinal">
-		<ons-page>
-			<div class="toolbar">
-				<div class="toolbar__center">Auswertung</div>
-			</div>
-			<div class="card">
-				<div class="card__content" id="text_aufloesung">???</div>
-			</div>
-			<div style="text-align:center;margin-bottom:10px; ">
-				<button class="button button--outline" style="width: 95%" onclick="nav.pushPage('end')">
-					zum Ende
-				</button>
-			</div>
-		</ons-page>
-	</template> -->
-
-
-
 	<template id="end">
 		<ons-page>
 			<div class="toolbar">
@@ -408,7 +401,12 @@
 					</div>
 				</div>
 				<div style="text-align:center;margin-bottom:10px; ">
-					<button class="button button--outline" style="width: 95%" onclick="nav.pushPage('home')">
+					<button class="button" style="width: 95%" onclick="spielNeuStarten()">
+						Neues Spiel starten
+					</button>
+				</div>
+				<div style="text-align:center;margin-bottom:10px; ">
+					<button class="button button--outline" style="width: 95%" onclick="spielNeuStarten()">
 						abbrechen, zur Startseite
 					</button>
 				</div>

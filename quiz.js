@@ -26,27 +26,32 @@ function speichereEinstellungen() {
 
   if (isNaN(document.getElementById("alter").value)) {
     alert("Sie müssen bei Alter eine Zahl eingegebn!");
-    //TODO Abbruch
   } else {
     spieleralter = document.getElementById("alter").value;
   }
 
   alert(
     "Folgende Daten wurden gespeichert: \nAlter: " +
-      spieleralter +
-      " \nName: " +
-      spielername +
-      " \nLand: " +
-      land +
-      " \nAnrede: " +
-      geschlecht
+    spieleralter +
+    " \nName: " +
+    spielername +
+    " \nLand: " +
+    land +
+    " \nAnrede: " +
+    geschlecht
   );
 
   nav.pushPage("home");
 }
 
+function spielNeuStarten() {
+  runde = 1;
+  richtigeAntworten = 0;
+  falscheAntworten = 0;
+  nav.resetToPage("home");
+}
+
 function aendereAlter() {
-  //console.log("Test");
   document.getElementById("alter").value =
     document.getElementById("slider1").value;
 }
@@ -107,6 +112,7 @@ function naechsteFrage() {
         "Ständige Impfkommission";
       document.getElementById("antwortText4").textContent =
         "Stange-Impfkommission";
+      document.getElementById("bild1").setAttribute("src", "grafik/stiko.png");
     });
   } else if (runde == 6) {
     nav.resetToPage("frageAusfuellen").then(function () {
@@ -114,16 +120,16 @@ function naechsteFrage() {
         "Wie heißt die Person, die derzeit als Deutscher Bundesminister für Gesundheit dient.(Erwartete Antwort: 1. Vor- 2. Vor- Nachname)";
       document.getElementById("bild1").setAttribute("src", "grafik/bmg.png");
     });
-  } 
+  }
   else if (runde == 7) {
     nav.resetToPage("frageMehrfach").then(function () {
       document.getElementById("frageTextMehrfach").textContent =
         "Die häufigsten Symptome bei Infektionen mit dem Coronavirus sind: ";
-        document.getElementById("mehrfachAntwort1").textContent = "Fieber";
-        document.getElementById("mehrfachAntwort2").textContent = "Halluzinationen";
-        document.getElementById("mehrfachAntwort3").textContent = "Krampfanfall";
-        document.getElementById("mehrfachAntwort4").textContent = "Husten";
-      
+      document.getElementById("mehrfachAntwort1").textContent = "Fieber";
+      document.getElementById("mehrfachAntwort2").textContent = "Halluzinationen";
+      document.getElementById("mehrfachAntwort3").textContent = "Krampfanfall";
+      document.getElementById("mehrfachAntwort4").textContent = "Husten";
+
       document.getElementById("bild1").setAttribute("src", "grafik/symptom.jpg");
     });
   }
@@ -146,21 +152,10 @@ function naechsteFrage() {
 
 
   else {
- 
-
-    nav.resetToPage("end").then(function(){
+    nav.resetToPage("end").then(function () {
       document.getElementById("richtigeAntworten").innerHTML = richtigeAntworten;
-      document.getElementById("falscheAntworten").innerHTML= falscheAntworten;
-
+      document.getElementById("falscheAntworten").innerHTML = falscheAntworten;
     });
-
-    // alert(
-    //   "Finito, Du hast " +
-    //     richtigeAntworten + " richtige und " + falscheAntworten +
-    //     " falsche Antworten" +
-    //     "\n " + spielername + " Vielen Dank fürs Spielen"
-    // );
-    nav.pushPage("home"); 
   }
 }
 
@@ -218,7 +213,7 @@ function pruefeAntwort(antwortNr) {
   } else if (
     runde == 6 &&
     document.getElementById("AusfuellenAntwort").value ==
-      "Karl Wilhelm Lauterbach"
+    "Karl Wilhelm Lauterbach"
   ) {
     //richtig
     richtigeAntworten++;
@@ -241,7 +236,7 @@ function pruefeAntwort(antwortNr) {
       document.getElementById("text_aufloesung").textContent =
         "Richtige Antwort!";
     });
-  } 
+  }
   else if (
     runde == 8 && antwortNr == 3
   ) {
@@ -252,8 +247,8 @@ function pruefeAntwort(antwortNr) {
       document.getElementById("text_aufloesung").textContent =
         "Richtige Antwort!";
     });
-  } 
-  
+  }
+
   else {
     //falsch
     falscheAntworten++;
